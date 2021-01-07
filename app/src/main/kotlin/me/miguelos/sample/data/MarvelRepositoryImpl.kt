@@ -75,7 +75,7 @@ class MarvelRepositoryImpl @Inject constructor(
     private fun getAndCacheLocalMarvelCharacters(
         requestValues: GetCharacters.RequestValues
     ): Single<GetCharacters.ResponseValues?> =
-        marvelLocalDS.getMarvelCharacters(requestValues)
+        marvelLocalDS.getRankedMarvelCharacters(requestValues)
             .doOnSuccess { values ->
                 values?.marvelCharacters?.forEach {
                     cachedMarvelCharacters[it.id] = it
@@ -110,7 +110,7 @@ class MarvelRepositoryImpl @Inject constructor(
     }
 
     override fun deleteAllMarvelCharacters() {
-        marvelLocalDS.deleteAllMarvelCharacters()
+        marvelLocalDS.deleteRankedMarvelCharacters()
         cachedMarvelCharacters.clear()
     }
 

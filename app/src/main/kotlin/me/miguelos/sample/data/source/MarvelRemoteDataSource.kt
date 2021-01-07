@@ -1,14 +1,13 @@
-package me.miguelos.sample.domain
+package me.miguelos.sample.data.source
 
 import io.reactivex.rxjava3.core.Single
 import me.miguelos.sample.domain.usecase.GetCharacter
 import me.miguelos.sample.domain.usecase.GetCharacters
-import me.miguelos.sample.domain.usecase.SaveCharacters
 
 /**
  * Main entry point for accessing Marvel data.
  */
-interface MarvelRepository {
+interface MarvelRemoteDataSource {
 
     fun getMarvelCharacters(
         requestValues: GetCharacters.RequestValues
@@ -17,12 +16,4 @@ interface MarvelRepository {
     fun getMarvelCharacter(
         requestValues: GetCharacter.RequestValues
     ): Single<GetCharacter.ResponseValues?>
-
-    fun refreshMarvelCharacters()
-
-    fun deleteAllMarvelCharacters()
-
-    fun saveMarvelCharacters(
-        requestValues: SaveCharacters.RequestValues
-    )
 }

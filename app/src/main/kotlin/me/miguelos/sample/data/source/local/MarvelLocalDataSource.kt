@@ -2,8 +2,8 @@ package me.miguelos.sample.data.source.local
 
 import io.reactivex.rxjava3.core.Single
 import me.miguelos.sample.common.TwoWaysMapper
+import me.miguelos.sample.data.source.MarvelRankingDataSource
 import me.miguelos.sample.data.source.local.entity.MarvelCharacterDBEntity
-import me.miguelos.sample.domain.MarvelDataSource
 import me.miguelos.sample.domain.model.MarvelCharacter
 import me.miguelos.sample.domain.usecase.GetCharacter
 import me.miguelos.sample.domain.usecase.GetCharacters
@@ -17,9 +17,9 @@ import javax.inject.Inject
 class MarvelLocalDataSource @Inject constructor(
     val marvelCharacterDao: MarvelCharacterDao,
     private val characterMapper: TwoWaysMapper<MarvelCharacterDBEntity, MarvelCharacter>
-) : MarvelDataSource {
+) : MarvelRankingDataSource {
 
-    override fun getMarvelCharacters(
+    override fun getRankedMarvelCharacters(
         requestValues: GetCharacters.RequestValues
     ): Single<GetCharacters.ResponseValues?> =
         Single.fromCallable { marvelCharacterDao.getMarvelCharacters() }
@@ -38,7 +38,7 @@ class MarvelLocalDataSource @Inject constructor(
                 )
             }
 
-    override fun getMarvelCharacter(
+    override fun getRankedMarvelCharacter(
         requestValues: GetCharacter.RequestValues
     ): Single<GetCharacter.ResponseValues?> =
         Single.fromCallable { marvelCharacterDao.getMarvelCharacterById(requestValues.id) }
@@ -46,7 +46,7 @@ class MarvelLocalDataSource @Inject constructor(
                 GetCharacter.ResponseValues(characterMapper.mapOptional(it))
             }
 
-    override fun deleteAllMarvelCharacters() {
+    override fun deleteRankedMarvelCharacters() {
         marvelCharacterDao.deleteMarvelCharacters()
     }
 
